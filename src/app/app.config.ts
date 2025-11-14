@@ -11,6 +11,7 @@ import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { provideNzIcons } from 'ng-zorro-antd/icon';
 import { NZ_DATE_LOCALE, provideNzI18n, vi_VN } from 'ng-zorro-antd/i18n';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 registerLocaleData(vi);
 
@@ -46,6 +47,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+    provideAnimations(),
     KeycloakService,
     {
       provide: APP_INITIALIZER,
