@@ -1,0 +1,123 @@
+.page-wrapper {
+  min-height: 100%;
+}
+
+nz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  box-shadow: 0 2px 4px #808080;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  float: left;
+  cursor: pointer;
+}
+
+.header-menu {
+  line-height: 64px;
+
+  & nz-icon {
+    color: #fff;
+    font-size: 24px !important;
+    font-weight: bold;
+  }
+}
+
+.input-search {
+  width: 360px;
+}
+
+.main-container {
+  margin-top: 64px;
+  min-height: 100%;
+}
+
+@media (max-width: 1024px) {
+  .left-layout {
+    display: none;
+  }
+}
+
+.left-layout {
+  position: fixed;
+  left: 0;
+  width: 360px !important;
+  padding: 20px;
+
+  & nz-sider {
+    border-radius: 6px;
+
+    & ul {
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+}
+
+.inner-layout {
+  padding: 20px 24px;
+  margin: 0 360px;
+  min-height: 100%;
+
+  & nz-content {
+    background: #fff;
+    padding: 24px;
+    min-height: 280px;
+  }
+}
+
+.right-layout {
+  position: fixed;
+  right: 0;
+  width: 360px !important;
+  padding: 0 20px;
+  height: calc(100% - 64px);
+}
+
+.right-sider-scroll {
+  height: 100%;
+  overflow-y: auto;
+
+  & .right-sider {
+    padding: 20px 0;
+  }
+
+  & {
+    -ms-overflow-style: none; /* IE/Edge legacy */
+  }
+
+  &::-webkit-scrollbar {
+    width: 0; /* Chiều rộng thanh cuộn dọc */
+    height: 0; 
+  }
+
+  &:hover::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  /* 2. Tạo nền (rãnh) cho thanh cuộn */
+  &:hover::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Màu nền rãnh */
+    border-radius: 10px; 
+  }
+  
+  /* 3. Tùy chỉnh con trỏ cuộn (thumb) */
+  &:hover::-webkit-scrollbar-thumb {
+    background: #9e9e9e; /* Màu con trỏ */
+    border-radius: 10px; /* Bo góc */
+  }
+  
+  /* 4. Thay đổi màu khi di chuột qua con trỏ */
+  &:hover::-webkit-scrollbar-thumb:hover {
+    background: #7a7a7a;
+  }
+}

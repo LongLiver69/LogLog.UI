@@ -1,0 +1,91 @@
+<nz-layout class="page-wrapper">
+  <nz-header>
+    <div class="logo" routerLink="/">
+      <nz-icon nzType="global" nzTheme="outline" />
+      <span class="ms-2">LogLog</span>
+    </div>
+
+    <nz-input-group [nzAddOnAfter]="suffixIconSearch" nzSize="large" class="input-search">
+      <input type="text" nz-input placeholder="Tìm kiếm trên LogLog" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <nz-icon nzType="search" />
+    </ng-template>
+
+    <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu" [nzSelectable]="false">
+      <li nz-menu-item routerLink="/repo_chat">
+        <nz-badge [nzCount]="messageCount" [nzOverflowCount]="99" nzSize="small" nzColor="blue">
+          <nz-icon nzType="message" nzTheme="outline" />
+        </nz-badge>
+      </li>
+      <li nz-menu-item routerLink="/repo_feed">
+        <nz-badge [nzCount]="notificationCount" [nzOverflowCount]="99" nzSize="small" nzColor="blue">
+          <nz-icon nzType="bell" nzTheme="outline" />
+        </nz-badge>
+      </li>
+      <li nz-menu-item nz-dropdown [nzDropdownMenu]="menu" nzTrigger="click">
+        <img src="assets/images/avatar.png" alt="avatar"
+        style="object-fit: cover; width: 36px; height: 36px; border-radius: 50px;" />
+      </li>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item>Thông tin cá nhân</li>
+          <li nz-menu-item>Đổi mật khẩu</li>
+          <li nz-menu-item>Cài đặt</li>
+          <li nz-menu-divider></li>
+          <li nz-menu-item (click)="logout()">Đăng xuất</li>
+        </ul>
+      </nz-dropdown-menu>
+    </ul>
+  </nz-header>
+
+  <nz-layout class="main-container">
+    <div class="left-layout">
+      <nz-sider nzWidth="360px" nzTheme="light">
+        <ul nz-menu nzMode="inline">
+          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"></ng-container>
+          <ng-template #menuTpl let-menus>
+            @for (menu of menus; track menu) {
+            @if (!menu.children) {
+            <li nz-menu-item [nzPaddingLeft]="menu.level * 24" [nzDisabled]="menu.disabled"
+              [nzSelected]="menu.selected">
+              @if (menu.icon) {
+              <nz-icon [nzType]="menu.icon" />
+              }
+              <span>{{ menu.title }}</span>
+            </li>
+            } @else {
+            <li nz-submenu [nzPaddingLeft]="menu.level * 24" [nzOpen]="menu.open" [nzTitle]="menu.title"
+              [nzIcon]="menu.icon" [nzDisabled]="menu.disabled">
+              <ul>
+                <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }" />
+              </ul>
+            </li>
+            }
+            }
+          </ng-template>
+        </ul>
+      </nz-sider>
+    </div>
+
+    <nz-layout class="inner-layout">
+      <router-outlet></router-outlet>
+    </nz-layout>
+
+    <div class="right-layout">
+      <div class="right-sider-scroll">
+        <div class="right-sider">
+          <ul nz-menu nzMode="inline">
+            <li nz-menu-item nzSelected>Option 1</li>
+            <li nz-menu-item>Option 2</li>
+            <li nz-menu-item>Option 2</li>
+            <li nz-menu-item>Option 2</li>
+            <li nz-menu-item>Option 2</li>
+            <li nz-menu-item>Option 2</li>
+            <li nz-menu-item>Option 2</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nz-layout>
+</nz-layout>

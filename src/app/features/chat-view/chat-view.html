@@ -1,0 +1,44 @@
+<div class="container clearfix">
+  <div class="chat">
+    <div class="chat-header clearfix">
+      <img src="assets/images/avatar.png" alt="avatar"
+        style="object-fit: cover; width: 54px; height: 54px; border-radius: 50px;" />
+
+      <div class="chat-about">
+        <div class="chat-with">Chat with Thành Long</div>
+        <div class="chat-num-messages">already {{ listMsg.length }} messages</div>
+      </div>
+      <i class="fa fa-star"></i>
+    </div>
+
+    <div class="chat-history">
+      <ul>
+        @for (item of listMsg; track item) {
+        <li class="clearfix">
+          <!-- <div class="message-data align-right">
+            <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;              
+          </div> -->
+          <div class="message"
+            [ngClass]="{'float-right my-message': meId == item.fromUserId, ' other-message': meId != item.fromUserId}">
+            {{ item.msg }}
+          </div>
+        </li>
+        }
+      </ul>
+
+    </div>
+
+    <div class="chat-message clearfix">
+      <textarea name="message-to-send" id="message-to-send" [(ngModel)]="msg" (keydown.enter)="sendMsg()"
+        placeholder="Type your message" rows="3"></textarea>
+
+      <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
+      <i class="fa fa-file-image-o"></i>
+
+      <button (click)="sendMsg()">Send</button>
+
+    </div>
+
+  </div>
+
+</div>
