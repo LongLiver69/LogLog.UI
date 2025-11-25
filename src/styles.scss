@@ -1,26 +1,32 @@
 * {
-  -ms-overflow-style: none; /* IE/Edge legacy */
+  -ms-overflow-style: none;
+  /* IE/Edge legacy */
 }
 
 *:hover::-webkit-scrollbar {
-  width: 0; /* Chiều rộng thanh cuộn dọc */
-  height: 0; 
+  width: 0;
+  /* Chiều rộng thanh cuộn dọc */
+  height: 0;
 }
 
 *:hover::-webkit-scrollbar {
-  width: 10px; /* Chiều rộng thanh cuộn dọc */
+  width: 10px;
+  /* Chiều rộng thanh cuộn dọc */
 }
 
 /* 2. Tạo nền (rãnh) cho thanh cuộn */
 *:hover::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Màu nền rãnh */
-  border-radius: 10px; 
+  background: #f1f1f1;
+  /* Màu nền rãnh */
+  border-radius: 10px;
 }
 
 /* 3. Tùy chỉnh con trỏ cuộn (thumb) */
 *:hover::-webkit-scrollbar-thumb {
-  background: #888; /* Màu con trỏ */
-  border-radius: 10px; /* Bo góc */
+  background: #888;
+  /* Màu con trỏ */
+  border-radius: 10px;
+  /* Bo góc */
 }
 
 /* 4. Thay đổi màu khi di chuột qua con trỏ */
@@ -31,4 +37,8 @@
 * {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   box-sizing: border-box;
+}
+
+.ant-splitter-bar-dragger::after {
+  display: none;
 }

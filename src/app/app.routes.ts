@@ -12,7 +12,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./features/home/post-widget/post-widget').then(m => m.PostWidget),
+        loadComponent: () => import('./features/feed-view/feed-view').then(m => m.FeedView),
       },
     ],
   },

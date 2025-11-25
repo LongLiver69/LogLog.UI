@@ -21,7 +21,7 @@ export class SignalrService {
     }
 
     const accessToken = await this.tryGetAccessToken();
-
+    
     this.connection = new HubConnectionBuilder()
       .withUrl(environment.signalrHubUrl, {
         accessTokenFactory: accessToken ? () => accessToken : undefined,

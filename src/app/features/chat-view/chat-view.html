@@ -1,44 +1,28 @@
-<div class="container clearfix">
-  <div class="chat">
-    <div class="chat-header clearfix">
-      <img src="assets/images/avatar.png" alt="avatar"
-        style="object-fit: cover; width: 54px; height: 54px; border-radius: 50px;" />
-
-      <div class="chat-about">
-        <div class="chat-with">Chat with Thành Long</div>
-        <div class="chat-num-messages">already {{ listMsg.length }} messages</div>
-      </div>
-      <i class="fa fa-star"></i>
-    </div>
-
-    <div class="chat-history">
-      <ul>
-        @for (item of listMsg; track item) {
-        <li class="clearfix">
-          <!-- <div class="message-data align-right">
-            <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;              
-          </div> -->
-          <div class="message"
-            [ngClass]="{'float-right my-message': meId == item.fromUserId, ' other-message': meId != item.fromUserId}">
-            {{ item.msg }}
+<div class="chat-container">
+  <nz-splitter>
+    <nz-splitter-panel nzDefaultSize="22%" nzMin="16%" nzMax="28%">
+      <div class="box chat-left-layout">
+        <div class="p-3 w-100">
+          <input nz-input placeholder="Search" nzSize="large" />
+        </div>
+        <div class="chat-contacts-list"></div>
+        @for (menu of listOnUser; track menu) {
+        <div class="chat-contact-item d-flex align-items-center p-2 gap-3">
+          <img src="assets/images/avatar.png" alt="avatar"
+            style="object-fit: cover; width: 36px; height: 36px; border-radius: 50px;" />
+          <div>
+            <span>{{menu.fullName}}</span>
+            <div>Tin nhắn mới</div>
           </div>
-        </li>
+        </div>
         }
-      </ul>
-
-    </div>
-
-    <div class="chat-message clearfix">
-      <textarea name="message-to-send" id="message-to-send" [(ngModel)]="msg" (keydown.enter)="sendMsg()"
-        placeholder="Type your message" rows="3"></textarea>
-
-      <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
-      <i class="fa fa-file-image-o"></i>
-
-      <button (click)="sendMsg()">Send</button>
-
-    </div>
-
-  </div>
-
+      </div>
+    </nz-splitter-panel>
+    <nz-splitter-panel>
+      <div class="box">Panel 2</div>
+    </nz-splitter-panel>
+    <nz-splitter-panel [nzCollapsible]="true" nzDefaultSize="22%" nzMin="16%" nzMax="28%">
+      <div class="box chat-right-layout">Panel 3</div>
+    </nz-splitter-panel>
+  </nz-splitter>
 </div>

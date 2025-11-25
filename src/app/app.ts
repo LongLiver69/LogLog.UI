@@ -23,9 +23,5 @@ export class App {
         console.error('Failed to start SignalR connection', err);
       });
   }
-
-  ngOnInit() {
-    this.signalrService.invoke("OnConnectedAsync")
-      .catch(err => console.error(err));
-  }
+  
 }
