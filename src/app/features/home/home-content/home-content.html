@@ -1,3 +1,48 @@
 <div class="home-content-wrapper">
-  <app-post-widget></app-post-widget>
+  <div class="left-layout">
+    <nz-sider nzWidth="360px" nzTheme="light">
+      <ul nz-menu nzMode="inline">
+        <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"></ng-container>
+        <ng-template #menuTpl let-menus>
+          @for (menu of menus; track menu) {
+          @if (!menu.children) {
+          <li nz-menu-item [nzPaddingLeft]="menu.level * 24" [nzDisabled]="menu.disabled" [nzSelected]="menu.selected">
+            @if (menu.icon) {
+            <nz-icon [nzType]="menu.icon" />
+            }
+            <span>{{ menu.title }}</span>
+          </li>
+          } @else {
+          <li nz-submenu [nzPaddingLeft]="menu.level * 24" [nzOpen]="menu.open" [nzTitle]="menu.title"
+            [nzIcon]="menu.icon" [nzDisabled]="menu.disabled">
+            <ul>
+              <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }" />
+            </ul>
+          </li>
+          }
+          }
+        </ng-template>
+      </ul>
+    </nz-sider>
+  </div>
+
+  <nz-layout class="inner-layout">
+    <router-outlet></router-outlet>
+  </nz-layout>
+
+  <div class="right-layout">
+    <div class="right-sider-scroll">
+      <div class="right-sider">
+        <ul nz-menu nzMode="inline">
+          <li nz-menu-item nzSelected>Option 1</li>
+          <li nz-menu-item>Option 2</li>
+          <li nz-menu-item>Option 2</li>
+          <li nz-menu-item>Option 2</li>
+          <li nz-menu-item>Option 2</li>
+          <li nz-menu-item>Option 2</li>
+          <li nz-menu-item>Option 2</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>

@@ -13,12 +13,12 @@
     </ng-template>
 
     <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu" [nzSelectable]="false">
-      <li nz-menu-item routerLink="/repo_chat">
+      <li nz-menu-item routerLink="/chat">
         <nz-badge [nzCount]="messageCount" [nzOverflowCount]="99" nzSize="small" nzColor="blue">
           <nz-icon nzType="message" nzTheme="outline" />
         </nz-badge>
       </li>
-      <li nz-menu-item routerLink="/repo_feed">
+      <li nz-menu-item routerLink="">
         <nz-badge [nzCount]="notificationCount" [nzOverflowCount]="99" nzSize="small" nzColor="blue">
           <nz-icon nzType="bell" nzTheme="outline" />
         </nz-badge>
@@ -40,52 +40,7 @@
   </nz-header>
 
   <nz-layout class="main-container">
-    <div class="left-layout">
-      <nz-sider nzWidth="360px" nzTheme="light">
-        <ul nz-menu nzMode="inline">
-          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"></ng-container>
-          <ng-template #menuTpl let-menus>
-            @for (menu of menus; track menu) {
-            @if (!menu.children) {
-            <li nz-menu-item [nzPaddingLeft]="menu.level * 24" [nzDisabled]="menu.disabled"
-              [nzSelected]="menu.selected">
-              @if (menu.icon) {
-              <nz-icon [nzType]="menu.icon" />
-              }
-              <span>{{ menu.title }}</span>
-            </li>
-            } @else {
-            <li nz-submenu [nzPaddingLeft]="menu.level * 24" [nzOpen]="menu.open" [nzTitle]="menu.title"
-              [nzIcon]="menu.icon" [nzDisabled]="menu.disabled">
-              <ul>
-                <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }" />
-              </ul>
-            </li>
-            }
-            }
-          </ng-template>
-        </ul>
-      </nz-sider>
-    </div>
-
-    <nz-layout class="inner-layout">
-      <router-outlet></router-outlet>
-    </nz-layout>
-
-    <div class="right-layout">
-      <div class="right-sider-scroll">
-        <div class="right-sider">
-          <ul nz-menu nzMode="inline">
-            <li nz-menu-item nzSelected>Option 1</li>
-            <li nz-menu-item>Option 2</li>
-            <li nz-menu-item>Option 2</li>
-            <li nz-menu-item>Option 2</li>
-            <li nz-menu-item>Option 2</li>
-            <li nz-menu-item>Option 2</li>
-            <li nz-menu-item>Option 2</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <router-outlet></router-outlet>
   </nz-layout>
+
 </nz-layout>

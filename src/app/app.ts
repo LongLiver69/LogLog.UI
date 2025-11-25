@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { SignalrService } from './services/signalr.service';
 import { MainLayout } from './shared/components/main-layout/main-layout';
+import { RouterModule } from "@angular/router";
 
 @Component({
   selector: 'app-root',
-  imports: [MainLayout],
+  imports: [RouterModule, MainLayout],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -21,5 +22,10 @@ export class App {
       .catch(err => {
         console.error('Failed to start SignalR connection', err);
       });
+  }
+
+  ngOnInit() {
+    this.signalrService.invoke("OnConnectedAsync")
+      .catch(err => console.error(err));
   }
 }
