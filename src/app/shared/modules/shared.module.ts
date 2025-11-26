@@ -11,6 +11,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 const MODULES = [
   CommonModule,
@@ -25,6 +26,7 @@ const MODULES = [
   NzButtonModule,
   NzBadgeModule,
   NzDropDownModule,
+  NzTooltipModule,
 ];
 
 @NgModule({

@@ -6,12 +6,12 @@
           <input nz-input placeholder="Search" nzSize="large" />
         </div>
         <div class="chat-contacts-list"></div>
-        @for (menu of listOnUser; track menu) {
-        <div class="chat-contact-item d-flex align-items-center p-2 gap-3">
+        @for (contact of listContact; track contact) {
+        <div class="chat-contact-item d-flex align-items-center p-2 gap-3" (click)="onSelectContact(contact)">
           <img src="assets/images/avatar.png" alt="avatar"
             style="object-fit: cover; width: 36px; height: 36px; border-radius: 50px;" />
           <div>
-            <span>{{menu.fullName}}</span>
+            <h6>{{contact.userFullname}}</h6>
             <div>Tin nhắn mới</div>
           </div>
         </div>
@@ -19,7 +19,56 @@
       </div>
     </nz-splitter-panel>
     <nz-splitter-panel>
-      <div class="box">Panel 2</div>
+      <div class="box chat-inner-layout">
+        @if(selectedContact) {
+        <div class="chat-inner-header">
+          <div class="d-flex align-items-center gap-3">
+            <img src="assets/images/avatar.png" alt="avatar"
+              style="object-fit: cover; width: 36px; height: 36px; border-radius: 50px;" />
+            <div>
+              <h5>{{ selectedContact?.userFullname }}</h5>
+              <div>Đang hoạt động</div>
+            </div>
+          </div>
+          <div class="chat-header-actions">
+            <button nz-button nzType="text" nzShape="circle" nzSize="large" nz-tooltip
+              nzTooltipTitle="Bắt đầu gọi thoại" nzTooltipPlacement="bottom">
+              <i nz-icon nzType="phone" nzTheme="twotone"></i>
+            </button>
+            <button nz-button nzType="text" nzShape="circle" nzSize="large" nz-tooltip
+              nzTooltipTitle="Bắt đầu gọi video" nzTooltipPlacement="bottom">
+              <i nz-icon nzType="video-camera" nzTheme="twotone"></i>
+            </button>
+            <button nz-button nzType="text" nzShape="circle" nzSize="large" nz-tooltip
+              nzTooltipTitle="Thông tin cuộc trò chuyện" nzTooltipPlacement="bottom">
+              <i nz-icon nzType="info-circle" nzTheme="twotone"></i>
+            </button>
+          </div>
+        </div>
+        <div class="chat-inner-content">
+          <div class="chat-message received-message">
+            <div class="message-content">
+              Xin chào! Tôi có thể giúp gì cho bạn hôm nay?
+            </div>
+            <div class="message-timestamp">10:00 AM</div>
+          </div>
+          <div class="chat-message sent-message">
+            <div class="message-content">
+              Chào bạn! Tôi muốn biết thêm về sản phẩm của bạn.
+            </div>
+            <div class="message-timestamp">10:01 AM</div>
+          </div>
+        </div>
+        <div class="chat-inner-footer">
+          <input nz-input placeholder="Type a message" />
+          <button nz-button nzType="primary">Send</button>
+        </div>
+        } @else {
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <h5 class="chat-empty">Chọn một liên hệ để bắt đầu trò chuyện</h5>
+        </div>
+        }
+      </div>
     </nz-splitter-panel>
     <nz-splitter-panel [nzCollapsible]="true" nzDefaultSize="22%" nzMin="16%" nzMax="28%">
       <div class="box chat-right-layout">Panel 3</div>

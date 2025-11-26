@@ -28,6 +28,35 @@ nz-splitter {
   }
 }
 
+.chat-inner-layout {
+  background-color: #fff;
+
+  .chat-empty {
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 50px;
+  }
+}
+
+.chat-inner-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+.chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  & button {
+    &:hover {
+      background-color: #f1f1f1;
+    }
+  }
+}
+
 .chat-right-layout {
   background-color: lightblue;
 }

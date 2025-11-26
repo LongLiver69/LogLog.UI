@@ -1,9 +1,8 @@
 import { HubConnectionState } from '@microsoft/signalr';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { SharedModule } from '../../shared/modules/shared.module';
 import { NzSplitterModule } from 'ng-zorro-antd/splitter';
 import { SignalrService } from '../../services/signalr.service';
-import { filter, take } from 'rxjs';
 
 @Component({
   selector: 'app-chat-view',
@@ -12,7 +11,8 @@ import { filter, take } from 'rxjs';
   styleUrl: './chat-view.scss',
 })
 export class ChatView {
-  listOnUser: any = [];
+  listContact: any[] = [];
+  selectedContact: any;
 
   listMsg: any = [
     {
@@ -54,14 +54,16 @@ export class ChatView {
   }
 
   userOnListener(): void {
-    this.signalrService.on("userOn", (newUser: any) => {
-      this.listOnUser.push(newUser);
+    this.signalrService.on("userOn", (contact: any) => {
+      this.listContact.push(contact);
     });
   }
 
   userOffListener(): void {
-    this.signalrService.on("userOff", (personId: any) => {
-      this.listOnUser = this.listOnUser.filter((u: any) => u.userId != personId);
+    this.signalrService.on("userOff", (userId: any) => {
+      this.listContact = this.listContact.filter((u: any) => u.userId != userId);
+      console.log(this.listContact);
+      
     });
   }
 
@@ -72,17 +74,16 @@ export class ChatView {
 
   getOnlineUsersListener(): void {
     this.signalrService.on("getOnlineUsersResponse", (onlineUsers: Array<any>) => {
-      this.listOnUser = [...onlineUsers];
-      console.log(this.listOnUser);
+      this.listContact = [...onlineUsers];      
     });
   }
 
   sendMsg(): void {
     // const msgInfo: any = {
     //   fromUserId: this.signalrService.meId,
-    //   toUserId: this.listOnUser[0].userId,
+    //   toUserId: this.listContact[0].userId,
     //   fromConnectionId: this.signalrService.meConnection,
-    //   toConnectionId: this.listOnUser[0].signalrId,
+    //   toConnectionId: this.listContact[0].signalrId,
     //   msg: this.msg
     // }
     // this.signalrService.invoke("SendMsg", msgInfo)
@@ -97,5 +98,14 @@ export class ChatView {
     this.signalrService.on("sendMsgResponse", (msgInfo: any) => {
       this.listMsg.push(msgInfo);
     });
+  }
+
+  onSelectContact(contact: any) {
+    this.selectedContact = contact;
+  }
+
+  @HostListener('window:keydown.escape')
+  onEscapePress() {
+    this.selectedContact = null;
   }
 }
