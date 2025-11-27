@@ -62,8 +62,6 @@ export class ChatView {
   userOffListener(): void {
     this.signalrService.on("userOff", (userId: any) => {
       this.listContact = this.listContact.filter((u: any) => u.userId != userId);
-      console.log(this.listContact);
-      
     });
   }
 
@@ -79,19 +77,19 @@ export class ChatView {
   }
 
   sendMsg(): void {
-    // const msgInfo: any = {
-    //   fromUserId: this.signalrService.meId,
-    //   toUserId: this.listContact[0].userId,
-    //   fromConnectionId: this.signalrService.meConnection,
-    //   toConnectionId: this.listContact[0].signalrId,
-    //   msg: this.msg
-    // }
-    // this.signalrService.invoke("SendMsg", msgInfo)
-    //   .then(() => {
-    //     this.listMsg.push(msgInfo);
-    //     this.msg = "";
-    //   })
-    //   .catch(err => console.error(err));
+    const msgInfo: any = {
+      // fromUserId: this.signalrService.meId,
+      toUserId: this.listContact[0].userId,
+      // fromConnectionId: this.signalrService.meConnection,
+      toConnectionId: this.listContact[0].signalrId,
+      msg: this.msg
+    }
+    this.signalrService.invoke("SendMsg", msgInfo)
+      .then(() => {
+        this.listMsg.push(msgInfo);
+        this.msg = "";
+      })
+      .catch(err => console.error(err));
   }
 
   getMsgListener(): void {

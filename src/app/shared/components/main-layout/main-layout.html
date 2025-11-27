@@ -14,12 +14,12 @@
 
     <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu" [nzSelectable]="false">
       <li nz-menu-item routerLink="/chat">
-        <nz-badge [nzCount]="messageCount" [nzOverflowCount]="99" nzSize="small" nzColor="blue">
+        <nz-badge [nzCount]="3" [nzOverflowCount]="99" nzSize="small" nzColor="blue">
           <nz-icon nzType="message" nzTheme="outline" />
         </nz-badge>
       </li>
       <li nz-menu-item routerLink="">
-        <nz-badge [nzCount]="notificationCount" [nzOverflowCount]="99" nzSize="small" nzColor="blue">
+        <nz-badge [nzCount]="12" [nzOverflowCount]="99" nzSize="small" nzColor="blue">
           <nz-icon nzType="bell" nzTheme="outline" />
         </nz-badge>
       </li>
@@ -28,6 +28,7 @@
         style="object-fit: cover; width: 36px; height: 36px; border-radius: 50px;" />
       </li>
       <nz-dropdown-menu #menu="nzDropdownMenu">
+        <div>{{ userInfo().name }}</div>
         <ul nz-menu>
           <li nz-menu-item>Thông tin cá nhân</li>
           <li nz-menu-item>Đổi mật khẩu</li>

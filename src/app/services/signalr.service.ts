@@ -28,7 +28,7 @@ export class SignalrService {
         transport: HttpTransportType.WebSockets,
         skipNegotiation: true,
       })
-      .withAutomaticReconnect({ nextRetryDelayInMilliseconds: () => 2000 })
+      .withAutomaticReconnect({ nextRetryDelayInMilliseconds: () => 5000 })
       .configureLogging(LogLevel.Information)
       .build();
 

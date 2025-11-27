@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
@@ -17,17 +17,29 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
   styleUrl: './main-layout.scss',
 })
 export class MainLayout {
+  userInfo = signal<any>(null);
+
   constructor(
     private keycloakService: KeycloakService,
   ) {
+    try {
+      const token = this.keycloakService.getKeycloakInstance().tokenParsed as any;
+      const userInfo = {
+        id: token?.sub,
+        username: token?.preferred_username,
+        email: token?.email,
+        name: token?.name,
+      };
+      this.userInfo.set(userInfo);
+      localStorage.setItem('userInfo', JSON.stringify(userInfo));
+    } catch (error) {
+      console.error('Error getting user info:', error);
+    }
   }
 
   logout() {
     this.keycloakService.logout(window.location.origin + '/');
   }
-
-  messageCount = 3;
-  notificationCount = 12;
-
+  
 }
 

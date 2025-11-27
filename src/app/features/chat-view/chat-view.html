@@ -46,21 +46,28 @@
           </div>
         </div>
         <div class="chat-inner-content">
-          <div class="chat-message received-message">
-            <div class="message-content">
-              Xin chào! Tôi có thể giúp gì cho bạn hôm nay?
+          <div class="chat-message clearfix">
+            <div class="message-container received-message">
+              <div class="message-content">
+                Xin chào! Tôi có thể giúp gì cho bạn hôm nay?
+              </div>
+              <div class="message-timestamp">10:00 AM</div>
             </div>
-            <div class="message-timestamp">10:00 AM</div>
           </div>
-          <div class="chat-message sent-message">
-            <div class="message-content">
-              Chào bạn! Tôi muốn biết thêm về sản phẩm của bạn.
+          <div class="chat-message clearfix">
+            <div class="message-container sent-message">
+              <div class="message-content">
+                Chào bạn! Tôi muốn biết thêm về sản phẩm của bạn.
+              </div>
+              <div class="message-timestamp">10:01 AM</div>
             </div>
-            <div class="message-timestamp">10:01 AM</div>
           </div>
         </div>
         <div class="chat-inner-footer">
-          <input nz-input placeholder="Type a message" />
+          <nz-input-wrapper>
+            <input nz-input placeholder="Type a message" nzSize="large" />
+            <nz-icon nzInputSuffix nzType="smile" />
+          </nz-input-wrapper>
           <button nz-button nzType="primary">Send</button>
         </div>
         } @else {

@@ -23,5 +23,9 @@ export class App {
         console.error('Failed to start SignalR connection', err);
       });
   }
+
+  // ngOnDestroy() {
+  //   this.signalrService.stop();
+  // }
   
 }
