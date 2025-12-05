@@ -1,5 +1,5 @@
 import { HubConnectionState } from '@microsoft/signalr';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, signal } from '@angular/core';
 import { SharedModule } from '../../shared/modules/shared.module';
 import { NzSplitterModule } from 'ng-zorro-antd/splitter';
 import { SignalrService } from '../../services/signalr.service';
@@ -14,25 +14,13 @@ export class ChatView {
   listContact: any[] = [];
   selectedContact: any;
 
-  listMsg: any = [
-    {
-      fromUserId: 1,
-      toUserId: 2,
-      fromConnectionId: 999,
-      toConnectionId: 888,
-      msg: 'Hello'
-    },
-    {
-      fromUserId: 2,
-      toUserId: 1,
-      fromConnectionId: 888,
-      toConnectionId: 999,
-      msg: 'Hi'
-    }
-  ];
+  // Signals để lưu thông tin user từ localStorage
+  username = signal<string | null>(this.getFromLocalStorage('username'));
+  userId = signal<string | null>(this.getFromLocalStorage('id'));
+
+  listMsg: any[] = [];
 
   msg!: string;
-  meId = 1;
 
   constructor(
     public signalrService: SignalrService,
@@ -78,11 +66,9 @@ export class ChatView {
 
   sendMsg(): void {
     const msgInfo: any = {
-      // fromUserId: this.signalrService.meId,
-      toUserId: this.listContact[0].userId,
-      // fromConnectionId: this.signalrService.meConnection,
-      toConnectionId: this.listContact[0].signalrId,
-      msg: this.msg
+      senderId: this.userId(),
+      receiverId: this.selectedContact.userId,
+      content: this.msg
     }
     this.signalrService.invoke("SendMsg", msgInfo)
       .then(() => {
@@ -106,4 +92,18 @@ export class ChatView {
   onEscapePress() {
     this.selectedContact = null;
   }
+
+  getFromLocalStorage(key: string): string | null {
+    try {
+      const userInfo = localStorage.getItem('userInfo');
+      if (userInfo) {
+        const parsed = JSON.parse(userInfo);
+        return parsed[key] || null;
+      }
+      return null;
+    } catch {
+      return null;
+    }
+  }
+
 }

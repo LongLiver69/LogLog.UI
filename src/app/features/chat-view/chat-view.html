@@ -46,29 +46,24 @@
           </div>
         </div>
         <div class="chat-inner-content">
+          @for (message of listMsg; track $index) {
           <div class="chat-message clearfix">
-            <div class="message-container received-message">
+            <div class="message-container"
+              [ngClass]="userId() === message.senderId ? 'sent-message' : 'received-message'">
               <div class="message-content">
-                Xin chào! Tôi có thể giúp gì cho bạn hôm nay?
+                {{ message.content }}
               </div>
-              <div class="message-timestamp">10:00 AM</div>
+              <div class="message-timestamp">{{ message.createdAt }}</div>
             </div>
           </div>
-          <div class="chat-message clearfix">
-            <div class="message-container sent-message">
-              <div class="message-content">
-                Chào bạn! Tôi muốn biết thêm về sản phẩm của bạn.
-              </div>
-              <div class="message-timestamp">10:01 AM</div>
-            </div>
-          </div>
+          }
         </div>
         <div class="chat-inner-footer">
           <nz-input-wrapper>
-            <input nz-input placeholder="Type a message" nzSize="large" />
+            <input nz-input placeholder="Type a message" nzSize="large" [(ngModel)]="msg" />
             <nz-icon nzInputSuffix nzType="smile" />
           </nz-input-wrapper>
-          <button nz-button nzType="primary">Send</button>
+          <button nz-button nzType="primary" (click)="sendMsg()">Send</button>
         </div>
         } @else {
         <div class="d-flex justify-content-center align-items-center h-100">
