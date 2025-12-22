@@ -60,7 +60,7 @@ nz-splitter {
 .chat-inner-content {
   overflow-y: auto;
   padding: 20px;
-  height: calc(100% - 130px);
+  height: calc(100% - 150px);
 }
 
 .chat-message {
@@ -76,7 +76,7 @@ nz-splitter {
     float: right;
     background-color: rgb(168, 198, 255);
   }
-  
+
   &.received-message {
     float: left;
     background-color: rgb(246, 185, 255);
@@ -102,4 +102,10 @@ nz-splitter {
 
 .chat-right-layout {
   background-color: lightblue;
+}
+
+::ng-deep emoji-mart {
+  .emoji-mart-scroll {
+    height: calc(100% - 90px) !important;
+  }
 }

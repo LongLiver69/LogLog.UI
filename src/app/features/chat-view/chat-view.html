@@ -50,17 +50,17 @@
           <div class="chat-message clearfix">
             <div class="message-container"
               [ngClass]="userId() === message.senderId ? 'sent-message' : 'received-message'">
-              <div class="message-content">
+              <div class="message-content fs-6">
                 {{ message.content }}
               </div>
-              <div class="message-timestamp">{{ message.createdAt }}</div>
+              <div class="message-timestamp">{{ message.createdAt | date:'EEEE, HH:mm:ss dd/MM/yyyy':'GMT+7' }}</div>
             </div>
           </div>
           }
         </div>
-        <div class="chat-inner-footer">
+        <div class="chat-inner-footer p-3">
           <nz-input-wrapper>
-            <input nz-input placeholder="Type a message" nzSize="large" [(ngModel)]="msg" />
+            <input nz-input placeholder="Type a message" nzSize="large" [(ngModel)]="msg" (keydown.enter)="sendMsg()" />
             <nz-icon nzInputSuffix nzType="smile" />
           </nz-input-wrapper>
           <button nz-button nzType="primary" (click)="sendMsg()">Send</button>
@@ -73,7 +73,11 @@
       </div>
     </nz-splitter-panel>
     <nz-splitter-panel [nzCollapsible]="true" nzDefaultSize="22%" nzMin="16%" nzMax="28%">
-      <div class="box chat-right-layout">Panel 3</div>
+      <div class="box chat-right-layout">
+        <emoji-mart [style]="{ width: '100%', height: '100%' }" [showPreview]="false" [emojiSize]="26" [skin]="6"
+          (emojiSelect)="addEmoji($event)">
+        </emoji-mart>
+      </div>
     </nz-splitter-panel>
   </nz-splitter>
 </div>

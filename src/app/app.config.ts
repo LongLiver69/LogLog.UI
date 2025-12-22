@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, LOCALE_ID, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
@@ -64,5 +64,6 @@ export const appConfig: ApplicationConfig = {
     provideNzIcons(icons),
     provideNzI18n(vi_VN),
     { provide: NZ_DATE_LOCALE, useValue: vi },
+    { provide: LOCALE_ID, useValue: 'vi' },
   ]
 };

@@ -3,10 +3,11 @@ import { Component, HostListener, signal } from '@angular/core';
 import { SharedModule } from '../../shared/modules/shared.module';
 import { NzSplitterModule } from 'ng-zorro-antd/splitter';
 import { SignalrService } from '../../services/signalr.service';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
 @Component({
   selector: 'app-chat-view',
-  imports: [SharedModule, NzSplitterModule],
+  imports: [SharedModule, NzSplitterModule, PickerComponent],
   templateUrl: './chat-view.html',
   styleUrl: './chat-view.scss',
 })
@@ -20,7 +21,7 @@ export class ChatView {
 
   listMsg: any[] = [];
 
-  msg!: string;
+  msg: string = '';
 
   constructor(
     public signalrService: SignalrService,
@@ -68,7 +69,8 @@ export class ChatView {
     const msgInfo: any = {
       senderId: this.userId(),
       receiverId: this.selectedContact.userId,
-      content: this.msg
+      content: this.msg,
+      createdAt: new Date().toISOString(),
     }
     this.signalrService.invoke("SendMsg", msgInfo)
       .then(() => {
@@ -91,6 +93,10 @@ export class ChatView {
   @HostListener('window:keydown.escape')
   onEscapePress() {
     this.selectedContact = null;
+  }
+
+  addEmoji(event: any) {    
+    this.msg = this.msg + event.emoji.native;
   }
 
   getFromLocalStorage(key: string): string | null {

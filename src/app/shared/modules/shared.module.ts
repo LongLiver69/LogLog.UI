@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, NgTemplateOutlet } from '@angular/common';
+import { CommonModule, DatePipe, NgTemplateOutlet } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Ng-Zorro modules
@@ -27,6 +27,7 @@ const MODULES = [
   NzBadgeModule,
   NzDropDownModule,
   NzTooltipModule,
+  DatePipe,
 ];
 
 @NgModule({

@@ -40,7 +40,8 @@
               "node_modules/ng-zorro-antd/resizable/style/index.min.css",
               "node_modules/ng-zorro-antd/code-editor/style/index.min.css",
               "node_modules/ng-zorro-antd/graph/style/index.min.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@ctrl/ngx-emoji-mart/picker.css"
             ]
           },
           "configurations": {
