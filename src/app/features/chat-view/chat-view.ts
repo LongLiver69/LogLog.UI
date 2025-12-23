@@ -2,12 +2,15 @@ import { HubConnectionState } from '@microsoft/signalr';
 import { Component, HostListener, signal } from '@angular/core';
 import { SharedModule } from '../../shared/modules/shared.module';
 import { NzSplitterModule } from 'ng-zorro-antd/splitter';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { SignalrService } from '../../services/signalr.service';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { GiphyFetch } from '@giphy/js-fetch-api';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-chat-view',
-  imports: [SharedModule, NzSplitterModule, PickerComponent],
+  imports: [SharedModule, NzSplitterModule, NzTabsModule, PickerComponent],
   templateUrl: './chat-view.html',
   styleUrl: './chat-view.scss',
 })
@@ -20,8 +23,9 @@ export class ChatView {
   userId = signal<string | null>(this.getFromLocalStorage('id'));
 
   listMsg: any[] = [];
-
   msg: string = '';
+  showRightPanel: boolean = true;
+  listGif: any[] = [];
 
   constructor(
     public signalrService: SignalrService,
@@ -39,6 +43,14 @@ export class ChatView {
       if (state === HubConnectionState.Connected) {
         this.getOnlineUsers();
       }
+    });
+
+    const gf = new GiphyFetch(environment.GIPHY_API_KEY || '');
+
+    gf.search('hello', { limit: 30 }).then(res => {
+      console.log(res.data);
+      
+      this.listGif = res.data;
     });
   }
 
@@ -61,7 +73,7 @@ export class ChatView {
 
   getOnlineUsersListener(): void {
     this.signalrService.on("getOnlineUsersResponse", (onlineUsers: Array<any>) => {
-      this.listContact = [...onlineUsers];      
+      this.listContact = [...onlineUsers];
     });
   }
 
@@ -95,7 +107,7 @@ export class ChatView {
     this.selectedContact = null;
   }
 
-  addEmoji(event: any) {    
+  addEmoji(event: any) {
     this.msg = this.msg + event.emoji.native;
   }
 

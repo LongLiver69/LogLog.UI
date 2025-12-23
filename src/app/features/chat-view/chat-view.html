@@ -61,7 +61,7 @@
         <div class="chat-inner-footer p-3">
           <nz-input-wrapper>
             <input nz-input placeholder="Type a message" nzSize="large" [(ngModel)]="msg" (keydown.enter)="sendMsg()" />
-            <nz-icon nzInputSuffix nzType="smile" />
+            <nz-icon nzInputSuffix nzType="smile" style="cursor: pointer;" (click)="showRightPanel=!showRightPanel" />
           </nz-input-wrapper>
           <button nz-button nzType="primary" (click)="sendMsg()">Send</button>
         </div>
@@ -72,12 +72,26 @@
         }
       </div>
     </nz-splitter-panel>
+    @if(showRightPanel) {
     <nz-splitter-panel [nzCollapsible]="true" nzDefaultSize="22%" nzMin="16%" nzMax="28%">
       <div class="box chat-right-layout">
-        <emoji-mart [style]="{ width: '100%', height: '100%' }" [showPreview]="false" [emojiSize]="26" [skin]="6"
-          (emojiSelect)="addEmoji($event)">
-        </emoji-mart>
+        <nz-tabs nzCentered>
+          <nz-tab nzTitle="Emoji">
+            <emoji-mart [style]="{ width: '100%', height: '100%' }" [showPreview]="false" [emojiSize]="26" [skin]="6"
+              (emojiSelect)="addEmoji($event)">
+            </emoji-mart>
+          </nz-tab>
+          <nz-tab nzTitle="GIFs">
+            <div class="masonry">
+              @for (item of listGif; track $index) {
+              <img type="" [src]="item.images.fixed_width_small.url" />
+              }
+            </div>
+          </nz-tab>
+          <nz-tab nzTitle="Stickers"></nz-tab>
+        </nz-tabs>
       </div>
     </nz-splitter-panel>
+    }
   </nz-splitter>
 </div>

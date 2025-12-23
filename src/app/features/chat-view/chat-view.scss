@@ -29,7 +29,7 @@ nz-splitter {
 }
 
 .chat-inner-layout {
-  background-color: #fff;
+  background: url('../../../assets/images/bg-message.jpg') center center / cover no-repeat;
 
   .chat-empty {
     padding: 10px;
@@ -43,6 +43,7 @@ nz-splitter {
   justify-content: space-between;
   border-bottom: 1px solid #ddd;
   padding: 10px;
+  backdrop-filter: blur(10px);
 }
 
 .chat-header-actions {
@@ -74,12 +75,12 @@ nz-splitter {
 
   &.sent-message {
     float: right;
-    background-color: rgb(168, 198, 255);
+    background-color: rgb(222, 233, 255);
   }
 
   &.received-message {
     float: left;
-    background-color: rgb(246, 185, 255);
+    background-color: #fff;
   }
 
   & .message-content {
@@ -98,14 +99,28 @@ nz-splitter {
 .chat-inner-footer {
   display: flex;
   align-items: center;
+  backdrop-filter: blur(10px);
 }
 
 .chat-right-layout {
-  background-color: lightblue;
+  background-color: #f1faff;
 }
 
 ::ng-deep emoji-mart {
   .emoji-mart-scroll {
     height: calc(100% - 90px) !important;
   }
+}
+
+.masonry {
+  column-count: 3;
+  column-gap: 8px;
+  padding: 4px;
+}
+
+.masonry img {
+  width: 100%;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  break-inside: avoid;
 }

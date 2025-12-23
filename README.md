@@ -1,6 +1,7 @@
 # LogLogUI
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.5.
+Using Node version 22.20.0
 
 ## Development server
 
