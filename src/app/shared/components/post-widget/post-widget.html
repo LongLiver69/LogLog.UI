@@ -3,9 +3,10 @@
     Bạn đang nghĩ gì thế?
   </div>
   <div class="post-action">
-    <div>
+    <div (click)="fileInput.click()">
       <nz-icon nzType="picture" nzTheme="outline" style="color: #45bd62;" />
       Ảnh/video
+      <input #fileInput type="file" hidden (change)="onFileSelect($event)" />
     </div>
     <div>
       <nz-icon nzType="smile" nzTheme="outline" style="color: #f7b928;" />

@@ -11,14 +11,14 @@ export abstract class BaseApiService {
     "Content-Type": "application/json; charset=utf-8",
   });
 
-  constructor(protected http: HttpClient) { }
+  constructor(protected httpClient: HttpClient) { }
 
   protected get<T>(
     endpoint: string,
     params?: any,
     headers?: HttpHeaders
   ): Observable<T> {
-    return this.http.get<T>(
+    return this.httpClient.get<T>(
       `${this.baseUrl}/${endpoint}`,
       {
         params: this.buildParams(params),
@@ -32,7 +32,7 @@ export abstract class BaseApiService {
     body: any,
     headers?: HttpHeaders
   ): Observable<T> {
-    return this.http.post<T>(
+    return this.httpClient.post<T>(
       `${this.baseUrl}/${endpoint}`,
       body,
       { headers: headers || this.headers }
@@ -44,7 +44,7 @@ export abstract class BaseApiService {
     body: any,
     headers?: HttpHeaders
   ): Observable<T> {
-    return this.http.put<T>(
+    return this.httpClient.put<T>(
       `${this.baseUrl}/${endpoint}`,
       body,
       { headers: headers || this.headers }
@@ -56,7 +56,7 @@ export abstract class BaseApiService {
     params?: any,
     headers?: HttpHeaders
   ): Observable<T> {
-    return this.http.delete<T>(
+    return this.httpClient.delete<T>(
       `${this.baseUrl}/${endpoint}`,
       {
         params: this.buildParams(params),

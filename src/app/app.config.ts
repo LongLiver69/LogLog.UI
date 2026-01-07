@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
 import { initializeKeycloak } from './core/configs/keycloak.config';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import vi from '@angular/common/locales/vi';
 import { IconDefinition } from '@ant-design/icons-angular';
@@ -48,6 +48,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimations(),
+    provideHttpClient(withInterceptorsFromDi()),
     KeycloakService,
     {
       provide: APP_INITIALIZER,
