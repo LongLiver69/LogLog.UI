@@ -1,8 +1,8 @@
-// import { PostWidget } from './features/home/post-widget/post-widget';
+// import { PostWidget } from './views/home/post-widget/post-widget';
 import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/authentication.guard';
-import { ChatView } from './features/chat-view/chat-view';
-import { HomeContent } from './features/home/home-content/home-content';
+import { ChatView } from './views/chat-view/chat-view';
+import { HomeContent } from './views/home/home-content/home-content';
 
 export const routes: Routes = [
   {
@@ -12,7 +12,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./features/feed-view/feed-view').then(m => m.FeedView),
+        loadComponent: () => import('./views/feed-view/feed-view').then(m => m.FeedView),
       },
     ],
   },
