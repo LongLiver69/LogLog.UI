@@ -15,7 +15,7 @@ export class FileService extends BaseApiService {
   }
 
   getDownloadUrl(objectName: string) {
-    return this.get('File/download-url' + objectName);
+    return this.get('File/download-url/' + objectName);
   }
 
   async uploadFile(file: File) {
@@ -25,8 +25,22 @@ export class FileService extends BaseApiService {
       method: 'PUT',
       body: file
     });
+
+    return res;
   }
 
+  async downloadFile(objectName: string) {
+    const res: any = await firstValueFrom(this.getDownloadUrl(objectName));
+
+    const response = await fetch(res.url);
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = objectName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  }
 }
-
-

@@ -2,6 +2,10 @@
   <div class="left-layout">
     <nz-sider nzWidth="360px" nzTheme="light">
       <ul nz-menu nzMode="inline">
+        <li nz-menu-item>
+          <img src="" alt="">
+          <span>{{ userInfo()?.name }}</span>
+        </li>
         <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"></ng-container>
         <ng-template #menuTpl let-menus>
           @for (menu of menus; track menu) {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { RouterOutlet } from '@angular/router';
 
@@ -9,6 +9,12 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './home-content.scss',
 })
 export class HomeContent {
+  userInfo = signal<any>({});
+
+  ngOnInit(): void {
+    this.userInfo.set(JSON.parse(localStorage.getItem('userInfo') || '{}'));
+  }
+
   menus = [
     {
       level: 1,

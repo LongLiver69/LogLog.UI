@@ -13,7 +13,7 @@ export abstract class BaseApiService {
 
   constructor(protected httpClient: HttpClient) { }
 
-  protected get<T>(
+  public get<T>(
     endpoint: string,
     params?: any,
     headers?: HttpHeaders
@@ -27,7 +27,7 @@ export abstract class BaseApiService {
     );
   }
 
-  protected post<T>(
+  public post<T>(
     endpoint: string,
     body: any,
     headers?: HttpHeaders
@@ -39,7 +39,7 @@ export abstract class BaseApiService {
     );
   }
 
-  protected put<T>(
+  public put<T>(
     endpoint: string,
     body: any,
     headers?: HttpHeaders
@@ -51,7 +51,7 @@ export abstract class BaseApiService {
     );
   }
 
-  protected delete<T>(
+  public delete<T>(
     endpoint: string,
     params?: any,
     headers?: HttpHeaders

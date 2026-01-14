@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/authentication.guard';
 import { ChatView } from './views/chat-view/chat-view';
 import { HomeContent } from './views/home/home-content/home-content';
+import { UploadAvatar } from './shared/components/upload-avatar/upload-avatar';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,11 @@ export const routes: Routes = [
   {
     path: 'chat',
     component: ChatView,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'upload-avatar',
+    component: UploadAvatar,
     canActivate: [AuthGuard],
   },
 ];
