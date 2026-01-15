@@ -58,21 +58,17 @@ export class MainLayout implements AfterViewInit {
   }
 
   getAvatar() {
-    this.avatarService.getAvatar().subscribe((avatar: any) => {
+    this.avatarService.getAvatar().subscribe((res: any) => {
       this.position = {
-        x: avatar.positionRatioX * this.containerSize,
-        y: avatar.positionRatioY * this.containerSize
+        x: res.positionRatioX * this.containerSize,
+        y: res.positionRatioY * this.containerSize
       };
-      this.zoomLevel = avatar.zoomLevel;
-      this.fileService.getDownloadUrl(avatar.avatarName).subscribe((image: any) => {
-        this.userInfo.set({
-          ...this.userInfo(),
-          avatarUrl: image.url
-        });
+      this.zoomLevel = res.zoomLevel;
+      this.userInfo.set({
+        ...this.userInfo(),
+        avatarUrl: res.avatarUrl
       });
     });
-    console.log(this.position, this.zoomLevel);
-
   }
 
   changeAvatar() {
