@@ -1,3 +1,29 @@
+// ========== Global SCSS Variables ==========
+// Colors
+$primary-color: #1877f2;
+$primary-hover: #166fe5;
+$success-color: #42b72a;
+$danger-color: #e4405f;
+$text-primary: #050505;
+$text-secondary: #65676b;
+$bg-primary: #ffffff;
+$bg-secondary: #f0f2f5;
+$border-color: #dddfe2;
+$overlay-dark: rgba(0, 0, 0, 0.4);
+
+// Spacing
+$spacing-xs: 8px;
+$spacing-sm: 12px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// Transitions
+$transition-fast: 0.2s ease;
+$transition-normal: 0.3s ease;
+$transition-slow: 0.4s ease;
+
+// ========== Global Styles ==========
 * {
   -ms-overflow-style: none;
   /* IE/Edge legacy */
@@ -41,4 +67,73 @@
 
 .ant-splitter-bar-dragger::after {
   display: none;
+}
+
+// custom style NzNotification
+.ant-notification-notice {
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.ant-notification-notice:has(.ant-notification-notice-icon-success) {
+  background-color: #E5FCF2;
+  color: #006339;
+  border-color: #00AB76;
+}
+
+.ant-notification-notice:has(.ant-notification-notice-icon-error) {
+  background-color: #FCE5EA;
+  color: #E20030;
+  border-color: #EF708A;
+}
+
+.ant-notification-notice:has(.ant-notification-notice-icon-warning) {
+  background-color: #FBF6E7;
+  color: #A74200;
+  border-color: #DBA816;
+}
+
+.ant-notification-notice:has(.ant-notification-notice-icon-info) {
+  background-color: #EAF6FF;
+  color: #024BB8;
+  border-color: #82B4FF;
+}
+
+// NzNotification - Title
+.ant-notification-notice-message {
+  font-weight: 600;
+}
+
+.ant-notification-notice-icon-success+.ant-notification-notice-message {
+  color: #006339;
+}
+
+.ant-notification-notice-icon-error+.ant-notification-notice-message {
+  color: #E20030;
+}
+
+.ant-notification-notice-icon-warning+.ant-notification-notice-message {
+  color: #A74200;
+}
+
+.ant-notification-notice-icon-info+.ant-notification-notice-message {
+  color: #024BB8;
+}
+
+// NzNotification - BtnClose
+.ant-notification-notice:has(.ant-notification-notice-icon-success) .ant-notification-notice-close-x svg {
+  color: #006339;
+}
+
+.ant-notification-notice:has(.ant-notification-notice-icon-error) .ant-notification-notice-close-x svg {
+  color: #E20030;
+}
+
+.ant-notification-notice:has(.ant-notification-notice-icon-warning) .ant-notification-notice-close-x svg {
+  color: #A74200;
+}
+
+.ant-notification-notice:has(.ant-notification-notice-icon-info) .ant-notification-notice-close-x svg {
+  color: #024BB8;
 }

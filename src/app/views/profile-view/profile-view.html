@@ -1,0 +1,165 @@
+<div class="profile-container" [formGroup]="formGroup">
+  <div class="cover-photo-section">
+    <div class="cover-photo" [style.background-image]="'url(' + coverPhotoUrl + ')'">
+      <div class="cover-overlay"></div>
+      <input type="file" #coverInput accept="image/*" hidden>
+      <button class="edit-cover-btn" (click)="coverInput.click()" title="Thay đổi ảnh bìa">
+        <nz-icon nzType="camera" nzTheme="outline"></nz-icon>
+        <span>Chỉnh sửa ảnh bìa</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="profile-header">
+    <div class="profile-header-content">
+      <div class="profile-picture-wrapper">
+        <div class="profile-picture">
+          <div #avatarPreview class="avatar-preview">
+            <div class="image-container" [style.transform]="'scale(' + zoomLevel + ')'">
+              <img src="{{ avatarUrl }}" alt="avatar"
+                [style.transform]="'translate(' + position.x + 'px, ' + position.y + 'px)'" />
+            </div>
+          </div>
+          <input type="file" #avatarInput accept="image/*" hidden>
+          <button class="edit-avatar-btn" (click)="avatarInput.click()" title="Thay đổi ảnh đại diện">
+            <nz-icon nzType="camera" nzTheme="outline"></nz-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="profile-info">
+        <h1 class="profile-name">{{ formGroup.value.firstName + ' ' + formGroup.value.lastName }}</h1>
+        <p class="profile-bio">{{ formGroup.value.bio }}</p>
+      </div>
+
+      <div class="profile-actions">
+        @if (!isEditMode) {
+        <button class="btn-edit-profile" (click)="toggleEditMode()">
+          <nz-icon nzType="edit" nzTheme="outline"></nz-icon>
+          <span>Chỉnh sửa trang cá nhân</span>
+        </button>
+        } @else {
+        <button class="btn-save-profile" (click)="saveProfile()">
+          <nz-icon nzType="check" nzTheme="outline"></nz-icon>
+          <span>Lưu thay đổi</span>
+        </button>
+        <button class="btn-cancel-profile" (click)="cancelEdit()">
+          <nz-icon nzType="close" nzTheme="outline"></nz-icon>
+          <span>Hủy</span>
+        </button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="profile-content">
+    <div>
+      <div class="info-card">
+        <div class="card-header">
+          <h2>
+            <nz-icon nzType="user" nzTheme="outline"></nz-icon>
+            Thông tin cá nhân
+          </h2>
+        </div>
+        <div class="card-body">
+          @if (!isEditMode) {
+          <div class="info-item">
+            <nz-icon nzType="user" nzTheme="outline"></nz-icon>
+            <div class="info-content">
+              <label>Họ và tên</label>
+              <p>{{ formGroup.value.firstName + ' ' + formGroup.value.lastName }}</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <nz-icon nzType="mail" nzTheme="outline"></nz-icon>
+            <div class="info-content">
+              <label>Email</label>
+              <p>{{ formGroup.value.email }}</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <nz-icon nzType="gift" nzTheme="outline"></nz-icon>
+            <div class="info-content">
+              <label>Ngày sinh</label>
+              <p>{{ formGroup.value.birthday | date:'dd/MM/yyyy' }}</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <nz-icon nzType="phone" nzTheme="outline"></nz-icon>
+            <div class="info-content">
+              <label>Số điện thoại</label>
+              <p>{{ formGroup.value.phone }}</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <nz-icon nzType="environment" nzTheme="outline"></nz-icon>
+            <div class="info-content">
+              <label>Địa chỉ</label>
+              <p>{{ formGroup.value.address }}</p>
+            </div>
+          </div>
+
+          } @else {
+
+          <div class="info-item-edit">
+            <label>
+              <nz-icon nzType="user" nzTheme="outline"></nz-icon>
+              Họ và tên
+            </label>
+            <div class="row">
+              <div class="col-6">
+                <input nz-input formControlName="firstName" type="text" placeholder="Họ">
+              </div>
+              <div class="col-6">
+                <input nz-input formControlName="lastName" type="text" placeholder="Tên">
+                @if (formGroup.get('lastName')?.invalid && formGroup.get('lastName')?.touched) {
+                <small style="color: red;">Tên là bắt buộc</small>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="info-item-edit">
+            <label>
+              <nz-icon nzType="mail" nzTheme="outline"></nz-icon>
+              Email
+            </label>
+            <input nz-input formControlName="email" type="email" placeholder="email@example.com">
+            @if (formGroup.get('email')?.invalid && formGroup.get('email')?.touched) {
+            <small style="color: red;">Email không hợp lệ</small>
+            }
+          </div>
+
+          <div class="info-item-edit">
+            <label>
+              <nz-icon nzType="gift" nzTheme="outline"></nz-icon>
+              Ngày sinh
+            </label>
+            <nz-date-picker nzFormat="dd/MM/yyyy" formControlName="birthday"></nz-date-picker>
+          </div>
+
+          <div class="info-item-edit">
+            <label>
+              <nz-icon nzType="phone" nzTheme="outline"></nz-icon>
+              Số điện thoại
+            </label>
+            <input nz-input formControlName="phone" type="tel" placeholder="+84 123 456 789">
+          </div>
+
+          <div class="info-item-edit">
+            <label>
+              <nz-icon nzType="environment" nzTheme="outline"></nz-icon>
+              Địa chỉ
+            </label>
+            <input nz-input formControlName="address" type="text" placeholder="Thành phố, Quốc gia">
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

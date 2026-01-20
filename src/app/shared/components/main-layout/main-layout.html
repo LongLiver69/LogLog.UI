@@ -26,14 +26,14 @@
       <li nz-menu-item nz-dropdown [nzDropdownMenu]="menu" nzTrigger="click">
         <div #avatarPreview class="avatar-preview">
           <div class="image-container" [style.transform]="'scale(' + zoomLevel + ')'">
-            <img src="{{ userInfo().avatarUrl }}" alt="avatar"
+            <img [src]="avatarUrl" alt="avatar"
               [style.transform]="'translate(' + position.x + 'px, ' + position.y + 'px)'" />
           </div>
         </div>
       </li>
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu>
-          <li nz-menu-item (click)="changeAvatar()">{{ userInfo().name }}</li>
+          <li nz-menu-item (click)="changeAvatar()">{{ userInfo?.name }}</li>
           <li nz-menu-item>Thông tin cá nhân</li>
           <li nz-menu-item>Đổi mật khẩu</li>
           <li nz-menu-item>Cài đặt</li>

@@ -48,8 +48,6 @@ export class ChatView {
     const gf = new GiphyFetch(environment.GIPHY_API_KEY || '');
 
     gf.search('hello', { limit: 30 }).then(res => {
-      console.log(res.data);
-      
       this.listGif = res.data;
     });
   }

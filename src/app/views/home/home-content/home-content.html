@@ -4,7 +4,7 @@
       <ul nz-menu nzMode="inline">
         <li nz-menu-item>
           <img src="" alt="">
-          <span>{{ userInfo()?.name }}</span>
+          <a routerLink="/profile" style="text-decoration: none;">{{ userInfo()?.name}}</a>
         </li>
         <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"></ng-container>
         <ng-template #menuTpl let-menus>

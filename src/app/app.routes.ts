@@ -1,14 +1,10 @@
-// import { PostWidget } from './views/home/post-widget/post-widget';
 import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/authentication.guard';
-import { ChatView } from './views/chat-view/chat-view';
-import { HomeContent } from './views/home/home-content/home-content';
-import { UploadAvatar } from './shared/components/upload-avatar/upload-avatar';
 
 export const routes: Routes = [
   {
     path: '',
-    component: HomeContent,
+    loadComponent: () => import('./views/home/home-content/home-content').then(m => m.HomeContent),
     canActivate: [AuthGuard],
     children: [
       {
@@ -19,12 +15,17 @@ export const routes: Routes = [
   },
   {
     path: 'chat',
-    component: ChatView,
+    loadComponent: () => import('./views/chat-view/chat-view').then(m => m.ChatView),
     canActivate: [AuthGuard],
   },
   {
     path: 'upload-avatar',
-    component: UploadAvatar,
+    loadComponent: () => import('./shared/components/upload-avatar/upload-avatar').then(m => m.UploadAvatar),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'profile',
+    loadComponent: () => import('./views/profile-view/profile-view').then(m => m.ProfileView),
     canActivate: [AuthGuard],
   },
 ];

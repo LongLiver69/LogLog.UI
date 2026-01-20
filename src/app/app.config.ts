@@ -5,15 +5,16 @@ import { KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
 import { initializeKeycloak } from './core/configs/keycloak.config';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
-import vi from '@angular/common/locales/vi';
+import viAngular from '@angular/common/locales/vi';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { provideNzIcons } from 'ng-zorro-antd/icon';
 import { NZ_DATE_LOCALE, provideNzI18n, vi_VN } from 'ng-zorro-antd/i18n';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { vi } from 'date-fns/locale';
 
-registerLocaleData(vi);
+registerLocaleData(viAngular);
 
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;

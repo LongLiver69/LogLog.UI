@@ -12,6 +12,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 const MODULES = [
   CommonModule,
@@ -27,6 +28,7 @@ const MODULES = [
   NzBadgeModule,
   NzDropDownModule,
   NzTooltipModule,
+  NzDatePickerModule,
   DatePipe,
 ];
 
@@ -34,4 +36,4 @@ const MODULES = [
   imports: [...MODULES],
   exports: [...MODULES],
 })
-export class SharedModule {}
+export class SharedModule { }

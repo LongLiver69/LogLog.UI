@@ -1,0 +1,506 @@
+@use '../../../styles.scss' as *;
+
+.profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: $bg-secondary;
+  min-height: 100vh;
+}
+
+.cover-photo-section {
+  position: relative;
+  width: 100%;
+  background: $bg-primary;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .cover-photo {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform $transition-slow;
+
+    &:hover {
+      .cover-overlay {
+        opacity: 1;
+      }
+
+      .edit-cover-btn {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  .cover-overlay {
+    position: absolute;
+    inset: 0;
+    background: $overlay-dark;
+    opacity: 0;
+    transition: opacity $transition-normal;
+  }
+
+  .edit-cover-btn {
+    position: absolute;
+    bottom: $spacing-lg;
+    right: $spacing-lg;
+    padding: $spacing-sm $spacing-lg;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    color: $text-primary;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all $transition-normal;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    i {
+      font-size: 16px;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+.profile-header {
+  background: $bg-primary;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: $spacing-lg;
+
+  .profile-header-content {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 0 $spacing-lg $spacing-lg;
+    display: flex;
+    align-items: flex-end;
+    gap: $spacing-lg;
+    position: relative;
+  }
+
+  .profile-picture-wrapper {
+    margin-top: -80px;
+    flex-shrink: 0;
+  }
+
+  .profile-picture {
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    border: 5px solid $bg-primary;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    cursor: pointer;
+    transition: all $transition-normal;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+
+      .edit-avatar-btn {
+        opacity: 1;
+      }
+    }
+  }
+
+  .avatar-preview {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #f5f5f5;
+    position: relative;
+
+    .image-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transition: transform 0.1s ease;
+      }
+    }
+  }
+
+  .edit-avatar-btn {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all $transition-fast;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: scale(1.1);
+    }
+  }
+
+  .profile-info {
+    flex: 1;
+    padding-top: $spacing-md;
+
+    .profile-name {
+      font-size: 32px;
+      font-weight: 700;
+      color: $text-primary;
+      margin: 0 0 $spacing-xs 0;
+      line-height: 1.2;
+    }
+
+    .profile-bio {
+      font-size: 15px;
+      color: $text-secondary;
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+
+  .profile-actions {
+    display: flex;
+    gap: $spacing-sm;
+    padding-top: $spacing-md;
+    flex-shrink: 0;
+
+    button {
+      padding: $spacing-sm $spacing-md;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      transition: all $transition-fast;
+      white-space: nowrap;
+
+      i {
+        font-size: 16px;
+      }
+    }
+
+    .btn-edit-profile {
+      background: $bg-secondary;
+      color: $text-primary;
+
+      &:hover {
+        background: #e4e6e9;
+      }
+    }
+
+    .btn-save-profile {
+      background: $success-color;
+      color: white;
+
+      &:hover {
+        background: #3fa827;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(66, 183, 42, 0.3);
+      }
+    }
+
+    .btn-cancel-profile {
+      background: $bg-secondary;
+      color: $text-primary;
+
+      &:hover {
+        background: #e4e6e9;
+      }
+    }
+  }
+}
+
+.profile-content {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 0 $spacing-lg $spacing-xl;
+  display: grid;
+  gap: $spacing-md;
+}
+
+.info-card {
+  background: $bg-primary;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  .card-header {
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid $border-color;
+
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: $text-primary;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+
+      i {
+        font-size: 20px;
+        color: $primary-color;
+      }
+    }
+  }
+
+  .card-body {
+    padding: $spacing-lg;
+  }
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  border-radius: 8px;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: rgba($primary-color, 0.03);
+  }
+
+  &+.info-item {
+    margin-top: $spacing-xs;
+  }
+
+  >i {
+    font-size: 20px;
+    color: $text-secondary;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .info-content {
+    flex: 1;
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: $text-secondary;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    p {
+      font-size: 15px;
+      color: $text-primary;
+      margin: 0;
+      line-height: 1.5;
+
+      a {
+        color: $primary-color;
+        text-decoration: none;
+        transition: color $transition-fast;
+
+        &:hover {
+          color: $primary-hover;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      margin-top: 4px;
+    }
+  }
+
+  .info-actions {
+    display: flex;
+    gap: $spacing-xs;
+    align-items: flex-start;
+    margin-top: 20px;
+    flex-shrink: 0;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      height: 32px;
+      padding: 0 8px;
+
+      i {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.info-item-edit {
+  margin-bottom: $spacing-md;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-primary;
+    margin-bottom: $spacing-xs;
+
+    i {
+      font-size: 16px;
+      color: $primary-color;
+    }
+  }
+
+  input,
+  textarea,
+  nz-date-picker {
+    width: 100%;
+    padding: $spacing-sm $spacing-md;
+    border: 2px solid $border-color;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    color: $text-primary;
+    background: $bg-primary;
+    transition: all $transition-fast;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 4px rgba($primary-color, 0.1);
+    }
+
+    &::placeholder {
+      color: #7f8185;
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 768px) {
+  .cover-photo-section .cover-photo {
+    height: 250px;
+  }
+
+  .profile-header {
+    .profile-header-content {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-top: $spacing-md;
+    }
+
+    .profile-picture-wrapper {
+      margin-top: -60px;
+    }
+
+    .profile-picture {
+      width: 140px;
+      height: 140px;
+    }
+
+    .profile-info {
+      padding-top: 0;
+
+      .profile-name {
+        font-size: 24px;
+      }
+    }
+
+    .profile-actions {
+      padding-top: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
+  .profile-content {
+    padding: 0 $spacing-md $spacing-lg;
+  }
+
+  .edit-cover-btn span {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .cover-photo-section .cover-photo {
+    height: 180px;
+  }
+
+  .profile-header {
+    .profile-picture {
+      width: 120px;
+      height: 120px;
+    }
+
+    .profile-info .profile-name {
+      font-size: 20px;
+    }
+
+    .profile-actions button {
+      font-size: 14px;
+      padding: $spacing-xs $spacing-sm;
+    }
+  }
+
+  .info-card {
+    .card-header h2 {
+      font-size: 18px;
+    }
+
+    .card-body {
+      padding: $spacing-md;
+    }
+  }
+}
