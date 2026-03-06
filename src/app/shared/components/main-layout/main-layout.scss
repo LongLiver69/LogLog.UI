@@ -21,7 +21,11 @@ nz-header {
 }
 
 .header-menu {
-  line-height: 64px;
+  height: 64px;
+
+  & li {
+    height: 100%;
+  }
 
   & nz-icon {
     color: #fff;

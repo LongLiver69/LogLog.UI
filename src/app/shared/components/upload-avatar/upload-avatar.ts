@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, Input, ViewChild, ElementRef, AfterVie
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FileService } from '../../../services/file.service';
-import { AvatarService } from '../../../services/avatar.service';
+import { UserService } from '../../../services/user.service';
 
 export interface AvatarTransform {
   positionRatio: { x: number; y: number };
@@ -29,7 +29,7 @@ export class UploadAvatar implements AfterViewInit {
 
   constructor(
     private fileService: FileService,
-    private avatarService: AvatarService
+    private userService: UserService
   ) { }
 
   ngOnInit() { }
@@ -130,7 +130,7 @@ export class UploadAvatar implements AfterViewInit {
           this.imageUrl = res.data;
           this.selectedFile = null;
           this.resetControls();
-          this.avatarService.updateAvatar({
+          this.userService.updateAvatar({
             avatarName: res.objectName,
             positionRatioX: transform.positionRatio.x,
             positionRatioY: transform.positionRatio.y,

@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } fr
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SharedModule } from '../../shared/modules/shared.module';
-import { AvatarService } from '../../services/avatar.service';
 import { KeycloakService } from 'keycloak-angular';
 import { UserService } from '../../services/user.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -31,7 +30,6 @@ export class ProfileView implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private avatarService: AvatarService,
     private userService: UserService,
     private keycloakService: KeycloakService,
     private notification: NzNotificationService,
@@ -112,7 +110,7 @@ export class ProfileView implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getAvatar() {
-    this.avatarService.getAvatar().subscribe((res: any) => {
+    this.userService.getAvatar().subscribe((res: any) => {
       this.position = {
         x: res.positionRatioX * this.containerSize,
         y: res.positionRatioY * this.containerSize

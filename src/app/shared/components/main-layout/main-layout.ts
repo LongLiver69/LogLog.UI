@@ -9,9 +9,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { AvatarService } from '../../../services/avatar.service';
 import { UserInfoService, UserInfo } from '../../../services/user-info.service';
 import { Subscription } from 'rxjs';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -33,7 +33,7 @@ export class MainLayout implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private keycloakService: KeycloakService,
     private router: Router,
-    private avatarService: AvatarService,
+    private userService: UserService,
     private userInfoService: UserInfoService,
   ) { }
 
@@ -47,7 +47,7 @@ export class MainLayout implements OnInit, AfterViewInit, OnDestroy {
     this.userInfoService.loadUserInfoFromToken(this.keycloakService);
 
     // Load avatar
-    this.getAvatar();
+    // this.getAvatar();
   }
 
   ngAfterViewInit() {
@@ -59,7 +59,7 @@ export class MainLayout implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getAvatar() {
-    this.avatarService.getAvatar().subscribe((res: any) => {
+    this.userService.getAvatar().subscribe((res: any) => {
       if (res) {
         this.position = {
           x: res.positionRatioX * this.containerSize,

@@ -10,6 +10,14 @@ export class UserService extends BaseApiService {
     super(httpClient);
   }
 
+  getAvatar() {
+    return this.get('User/avatar');
+  }
+
+  updateAvatar(body: any) {
+    return this.put('User/avatar', body);
+  }
+
   updateUser(body: any) {
     return this.put('User', body);
   }

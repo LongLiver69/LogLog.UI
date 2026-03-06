@@ -24,10 +24,12 @@
         </nz-badge>
       </li>
       <li nz-menu-item nz-dropdown [nzDropdownMenu]="menu" nzTrigger="click">
-        <div #avatarPreview class="avatar-preview">
-          <div class="image-container" [style.transform]="'scale(' + zoomLevel + ')'">
-            <img [src]="avatarUrl" alt="avatar"
-              [style.transform]="'translate(' + position.x + 'px, ' + position.y + 'px)'" />
+        <div class="d-flex align-items-center h-100">
+          <div #avatarPreview class="avatar-preview">
+            <div class="image-container" [style.transform]="'scale(' + zoomLevel + ')'">
+              <img [src]="avatarUrl" alt="avatar"
+                [style.transform]="'translate(' + position.x + 'px, ' + position.y + 'px)'" />
+            </div>
           </div>
         </div>
       </li>
