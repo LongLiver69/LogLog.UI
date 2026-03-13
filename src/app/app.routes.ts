@@ -24,6 +24,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'expense',
+    loadComponent: () => import('./views/expense-view/expense-view').then(m => m.ExpenseView),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'profile',
     loadComponent: () => import('./views/profile-view/profile-view').then(m => m.ProfileView),
     canActivate: [AuthGuard],

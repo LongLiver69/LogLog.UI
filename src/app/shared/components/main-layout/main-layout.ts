@@ -47,7 +47,7 @@ export class MainLayout implements OnInit, AfterViewInit, OnDestroy {
     this.userInfoService.loadUserInfoFromToken(this.keycloakService);
 
     // Load avatar
-    // this.getAvatar();
+    this.getAvatar();
   }
 
   ngAfterViewInit() {

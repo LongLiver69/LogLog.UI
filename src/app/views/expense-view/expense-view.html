@@ -1,0 +1,264 @@
+<div class="expense-wrapper">
+  <!-- Header -->
+  <div class="expense-header">
+    <div class="header-left">
+      <nz-icon nzType="wallet" nzTheme="twotone" [nzTwotoneColor]="'#7c5cfc'" class="header-icon"></nz-icon>
+      <h1>Chi tiêu nhóm</h1>
+    </div>
+    <button nz-button nzType="primary" nzSize="large" (click)="showAddExpenseModal()" [disabled]="members.length < 2"
+      class="btn-add-expense">
+      <nz-icon nzType="plus" />
+      Thêm chi tiêu
+    </button>
+  </div>
+
+  <!-- Stats Overview -->
+  <div class="stats-row" *ngIf="expenses.length > 0">
+    <nz-card class="stat-card stat-total">
+      <div class="stat-content">
+        <div class="stat-icon-wrap bg-purple">
+          <nz-icon nzType="dollar" nzTheme="outline" />
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Tổng chi tiêu</span>
+          <span class="stat-value">{{ formatCurrency(totalExpenses) }}₫</span>
+        </div>
+      </div>
+    </nz-card>
+    <nz-card class="stat-card stat-members">
+      <div class="stat-content">
+        <div class="stat-icon-wrap bg-blue">
+          <nz-icon nzType="team" nzTheme="outline" />
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Thành viên</span>
+          <span class="stat-value">{{ members.length }}</span>
+        </div>
+      </div>
+    </nz-card>
+    <nz-card class="stat-card stat-expenses">
+      <div class="stat-content">
+        <div class="stat-icon-wrap bg-green">
+          <nz-icon nzType="file-text" nzTheme="outline" />
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Khoản chi</span>
+          <span class="stat-value">{{ expenses.length }}</span>
+        </div>
+      </div>
+    </nz-card>
+    <nz-card class="stat-card stat-transactions">
+      <div class="stat-content">
+        <div class="stat-icon-wrap bg-orange">
+          <nz-icon nzType="swap" nzTheme="outline" />
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Giao dịch cần thanh toán</span>
+          <span class="stat-value">{{ totalTransactions }}</span>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+
+  <div class="expense-body">
+    <!-- Left: Members Panel -->
+    <div class="members-panel">
+      <nz-card nzTitle="Thành viên" class="members-card" [nzExtra]="memberCountTpl">
+        <ng-template #memberCountTpl>
+          <nz-tag nzColor="processing">{{ members.length }} người</nz-tag>
+        </ng-template>
+
+        <div class="member-input-row">
+          <nz-input-group [nzSuffix]="addBtnTpl" nzSize="large">
+            <input nz-input placeholder="Tên thành viên..." [(ngModel)]="newMemberName"
+              (keyup.enter)="addMember()" />
+          </nz-input-group>
+          <ng-template #addBtnTpl>
+            <nz-icon nzType="user-add" nzTheme="outline" class="add-member-icon" (click)="addMember()"
+              nz-tooltip nzTooltipTitle="Thêm thành viên" />
+          </ng-template>
+        </div>
+
+        <div class="members-list" *ngIf="members.length > 0">
+          <div class="member-item" *ngFor="let member of members; let i = index"
+            [style.animation-delay]="i * 50 + 'ms'">
+            <div class="member-info">
+              <nz-avatar [nzText]="getInitial(member)" [nzSize]="36"
+                [style.background-color]="getAvatarColor(member)" />
+              <span class="member-name">{{ member }}</span>
+            </div>
+            <nz-icon nzType="close-circle" nzTheme="fill" class="remove-member-icon"
+              nz-popconfirm nzPopconfirmTitle="Xoá thành viên này? Các khoản chi liên quan cũng sẽ bị ảnh hưởng."
+              (nzOnConfirm)="removeMember(member)" nz-tooltip nzTooltipTitle="Xoá thành viên" />
+          </div>
+        </div>
+
+        <nz-empty *ngIf="members.length === 0" nzNotFoundContent="Chưa có thành viên nào"
+          class="empty-members" />
+      </nz-card>
+    </div>
+
+    <!-- Right: Expenses Table + Settlements -->
+    <div class="main-content">
+      <!-- Expenses Table -->
+      <nz-card nzTitle="Danh sách chi tiêu" class="expenses-card" [nzExtra]="expenseCountTpl">
+        <ng-template #expenseCountTpl>
+          <nz-tag nzColor="success">{{ expenses.length }} khoản</nz-tag>
+        </ng-template>
+
+        <nz-table #expenseTable [nzData]="expenses" [nzShowPagination]="false" nzSize="middle"
+          [nzNoResult]="noExpensesTpl" class="expense-table" *ngIf="members.length >= 2">
+          <thead>
+            <tr>
+              <th nzWidth="30%">Khoản chi</th>
+              <th nzWidth="15%">Người trả</th>
+              <th nzWidth="15%" nzAlign="right">Số tiền</th>
+              <th nzWidth="12%">Ngày</th>
+              <th>Chia cho</th>
+              <th nzWidth="60px" nzAlign="center"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let expense of expenseTable.data; let i = index" class="expense-row"
+              [style.animation-delay]="i * 30 + 'ms'">
+              <td>
+                <span class="expense-description">{{ expense.description }}</span>
+              </td>
+              <td>
+                <div class="payer-cell">
+                  <nz-avatar [nzText]="getInitial(expense.paidBy)" nzSize="small"
+                    [style.background-color]="getAvatarColor(expense.paidBy)" />
+                  <span>{{ expense.paidBy }}</span>
+                </div>
+              </td>
+              <td nzAlign="right">
+                <span class="amount-value">{{ formatCurrency(expense.amount) }}₫</span>
+              </td>
+              <td>
+                <span class="date-value">{{ formatDate(expense.date) }}</span>
+              </td>
+              <td>
+                <div class="split-tags">
+                  <nz-tag *ngFor="let person of expense.splitAmong" [nzColor]="getAvatarColor(person)">
+                    {{ person }}
+                  </nz-tag>
+                </div>
+              </td>
+              <td nzAlign="center">
+                <nz-icon nzType="delete" nzTheme="outline" class="delete-expense-icon"
+                  nz-popconfirm nzPopconfirmTitle="Xoá khoản chi này?"
+                  (nzOnConfirm)="deleteExpense(expense.id)" nz-tooltip nzTooltipTitle="Xoá" />
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+
+        <ng-template #noExpensesTpl>
+          <nz-empty nzNotFoundContent="Chưa có khoản chi nào. Nhấn 'Thêm chi tiêu' để bắt đầu." />
+        </ng-template>
+
+        <nz-alert *ngIf="members.length < 2" nzType="info" nzShowIcon
+          nzMessage="Thêm ít nhất 2 thành viên để bắt đầu ghi nhận chi tiêu." class="info-alert" />
+      </nz-card>
+
+      <!-- Settlement Results -->
+      <nz-card nzTitle="Tổng kết thanh toán" class="settlement-card" [nzExtra]="settlementCountTpl"
+        *ngIf="expenses.length > 0">
+        <ng-template #settlementCountTpl>
+          <nz-tag [nzColor]="settlements.length > 0 ? 'warning' : 'success'">
+            {{ settlements.length > 0 ? settlements.length + ' giao dịch' : 'Đã cân bằng ✓' }}
+          </nz-tag>
+        </ng-template>
+
+        <div class="settlement-list" *ngIf="settlements.length > 0">
+          <div class="settlement-item" *ngFor="let s of settlements; let i = index"
+            [style.animation-delay]="i * 80 + 'ms'">
+            <div class="settlement-from">
+              <nz-avatar [nzText]="getInitial(s.from)" nzSize="large"
+                [style.background-color]="getAvatarColor(s.from)" />
+              <span class="person-name">{{ s.from }}</span>
+            </div>
+            <div class="settlement-arrow">
+              <div class="arrow-line"></div>
+              <div class="arrow-amount">{{ formatCurrency(s.amount) }}₫</div>
+              <nz-icon nzType="arrow-right" nzTheme="outline" class="arrow-icon" />
+            </div>
+            <div class="settlement-to">
+              <nz-avatar [nzText]="getInitial(s.to)" nzSize="large"
+                [style.background-color]="getAvatarColor(s.to)" />
+              <span class="person-name">{{ s.to }}</span>
+            </div>
+          </div>
+        </div>
+
+        <nz-empty *ngIf="settlements.length === 0"
+          nzNotFoundContent="Tất cả đã cân bằng! Không ai cần trả thêm." />
+      </nz-card>
+    </div>
+  </div>
+</div>
+
+<!-- Add Expense Modal -->
+<nz-modal [(nzVisible)]="isModalVisible" nzTitle="Thêm khoản chi tiêu" (nzOnCancel)="handleModalCancel()"
+  (nzOnOk)="handleModalOk()" nzOkText="Thêm" nzCancelText="Huỷ" [nzWidth]="520"
+  [nzOkDisabled]="!editingExpense.description || !editingExpense.amount || !editingExpense.paidBy || !editingExpense.splitAmong?.length"
+  nzClassName="expense-modal">
+
+  <ng-container *nzModalContent>
+    <div class="modal-form">
+      <div class="form-group">
+        <label>Mô tả khoản chi <span class="required">*</span></label>
+        <input nz-input placeholder="VD: Tiền ăn trưa, vé xem phim..." [(ngModel)]="editingExpense.description"
+          nzSize="large" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label>Số tiền (₫) <span class="required">*</span></label>
+          <nz-input-number [(ngModel)]="editingExpense.amount" [nzMin]="0" [nzStep]="1000"
+            nzSize="large" style="width: 100%"
+            [nzFormatter]="formatterVND" [nzParser]="parserVND" />
+        </div>
+        <div class="form-group flex-1">
+          <label>Ngày</label>
+          <nz-date-picker [(ngModel)]="editingExpense.date" nzSize="large" style="width: 100%"
+            nzFormat="dd/MM/yyyy" nzPlaceHolder="Chọn ngày" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Người trả <span class="required">*</span></label>
+        <nz-select [(ngModel)]="editingExpense.paidBy" nzSize="large" nzPlaceHolder="Chọn người trả"
+          style="width: 100%">
+          <nz-option *ngFor="let m of members" [nzValue]="m" [nzLabel]="m" />
+        </nz-select>
+      </div>
+
+      <div class="form-group">
+        <label>
+          Chia cho
+          <span class="required">*</span>
+          <span class="split-actions">
+            <a (click)="selectAllMembers()">Tất cả</a>
+            <nz-divider nzType="vertical" />
+            <a (click)="deselectAllMembers()">Bỏ chọn</a>
+          </span>
+        </label>
+        <div class="split-members-grid">
+          <div class="split-member-chip" *ngFor="let m of members" [class.selected]="isSplitMember(m)"
+            (click)="toggleSplitMember(m)">
+            <nz-avatar [nzText]="getInitial(m)" nzSize="small"
+              [style.background-color]="getAvatarColor(m)" />
+            <span>{{ m }}</span>
+            <nz-icon [nzType]="isSplitMember(m) ? 'check-circle' : 'plus-circle'" nzTheme="fill"
+              [class.checked]="isSplitMember(m)" />
+          </div>
+        </div>
+      </div>
+
+      <nz-alert *ngIf="editingExpense.splitAmong?.length && editingExpense.amount"
+        nzType="info" nzShowIcon class="split-info-alert"
+        [nzMessage]="'Mỗi người trả: ' + formatCurrency(editingExpense.amount! / editingExpense.splitAmong!.length) + '₫'" />
+    </div>
+  </ng-container>
+</nz-modal>

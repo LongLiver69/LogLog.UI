@@ -1,0 +1,785 @@
+// ===== Variables =====
+$primary: #7c5cfc;
+$primary-light: #a78bfa;
+$primary-dark: #5b3fd9;
+$bg-dark: #0f0f1a;
+$bg-card: #1a1a2e;
+$bg-card-hover: #1f1f35;
+$surface: #16213e;
+$text-primary: #e8e8f0;
+$text-secondary: #9898b0;
+$border-color: #2a2a4a;
+$success: #52c41a;
+$warning: #faad14;
+$danger: #ff4d4f;
+$info: #1890ff;
+
+// ===== Mixins =====
+@mixin glass-card {
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(124, 92, 252, 0.12);
+  border-radius: 16px;
+}
+
+@mixin smooth-transition($props: all, $duration: 0.3s) {
+  transition: $props $duration cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@mixin fade-slide-in {
+  animation: fadeSlideIn 0.4s ease-out both;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+// ===== Host =====
+:host {
+  display: block;
+  min-height: 100vh;
+  background: $bg-dark;
+  color: $text-primary;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+// ===== Wrapper =====
+.expense-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+// ===== Header =====
+.expense-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  @include fade-slide-in;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    .header-icon {
+      font-size: 36px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, $primary-light, $primary, #e879f9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+  }
+
+  .btn-add-expense {
+    height: 44px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 15px;
+    background: linear-gradient(135deg, $primary, $primary-dark);
+    border: none;
+    box-shadow: 0 4px 14px rgba(124, 92, 252, 0.35);
+    @include smooth-transition;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(124, 92, 252, 0.5);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// ===== Stats Row =====
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+  @include fade-slide-in;
+  animation-delay: 0.1s;
+
+  .stat-card {
+    @include glass-card;
+    @include smooth-transition;
+
+    &:hover {
+      transform: translateY(-3px);
+      border-color: rgba(124, 92, 252, 0.3);
+    }
+
+    ::ng-deep .ant-card-body {
+      padding: 20px;
+    }
+
+    .stat-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: white;
+      flex-shrink: 0;
+
+      &.bg-purple { background: linear-gradient(135deg, $primary, #9333ea); }
+      &.bg-blue { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+      &.bg-green { background: linear-gradient(135deg, #22c55e, #16a34a); }
+      &.bg-orange { background: linear-gradient(135deg, #f97316, #ea580c); }
+    }
+
+    .stat-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .stat-label {
+        font-size: 12px;
+        color: $text-secondary;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 500;
+      }
+
+      .stat-value {
+        font-size: 22px;
+        font-weight: 700;
+        color: $text-primary;
+      }
+    }
+  }
+}
+
+// ===== Body Layout =====
+.expense-body {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+// ===== Members Panel =====
+.members-panel {
+  @include fade-slide-in;
+  animation-delay: 0.15s;
+  position: sticky;
+  top: 24px;
+
+  .members-card {
+    @include glass-card;
+
+    ::ng-deep {
+      .ant-card-head {
+        background: transparent;
+        border-bottom: 1px solid $border-color;
+        color: $text-primary;
+        font-weight: 600;
+
+        .ant-card-head-title {
+          font-size: 16px;
+        }
+      }
+
+      .ant-card-body {
+        padding: 20px;
+      }
+    }
+  }
+
+  .member-input-row {
+    margin-bottom: 16px;
+
+    ::ng-deep {
+      .ant-input {
+        background: $surface;
+        border: 1px solid $border-color;
+        color: $text-primary;
+        border-radius: 10px;
+
+        &::placeholder {
+          color: $text-secondary;
+        }
+
+        &:focus {
+          border-color: $primary;
+          box-shadow: 0 0 0 2px rgba(124, 92, 252, 0.2);
+        }
+      }
+
+      .ant-input-group-addon {
+        background: transparent;
+        border: none;
+        padding: 0 12px;
+      }
+    }
+
+    .add-member-icon {
+      font-size: 20px;
+      color: $primary;
+      cursor: pointer;
+      @include smooth-transition;
+
+      &:hover {
+        color: $primary-light;
+        transform: scale(1.15);
+      }
+    }
+  }
+
+  .members-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .member-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: rgba(22, 33, 62, 0.6);
+    border-radius: 12px;
+    border: 1px solid transparent;
+    @include smooth-transition;
+    @include fade-slide-in;
+
+    &:hover {
+      background: rgba(124, 92, 252, 0.08);
+      border-color: rgba(124, 92, 252, 0.2);
+    }
+
+    .member-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .member-name {
+        font-weight: 500;
+        font-size: 14px;
+      }
+    }
+
+    .remove-member-icon {
+      font-size: 18px;
+      color: $text-secondary;
+      cursor: pointer;
+      opacity: 0;
+      @include smooth-transition;
+
+      &:hover {
+        color: $danger;
+      }
+    }
+
+    &:hover .remove-member-icon {
+      opacity: 1;
+    }
+  }
+
+  .empty-members {
+    padding: 24px 0;
+
+    ::ng-deep .ant-empty-description {
+      color: $text-secondary;
+    }
+  }
+}
+
+// ===== Main Content =====
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  @include fade-slide-in;
+  animation-delay: 0.2s;
+}
+
+.expenses-card,
+.settlement-card {
+  @include glass-card;
+
+  ::ng-deep {
+    .ant-card-head {
+      background: transparent;
+      border-bottom: 1px solid $border-color;
+      color: $text-primary;
+      font-weight: 600;
+
+      .ant-card-head-title {
+        font-size: 16px;
+      }
+    }
+
+    .ant-card-body {
+      padding: 0;
+    }
+  }
+}
+
+// ===== Expenses Table =====
+.expense-table {
+  ::ng-deep {
+    .ant-table {
+      background: transparent;
+      color: $text-primary;
+    }
+
+    .ant-table-thead > tr > th {
+      background: rgba(22, 33, 62, 0.8);
+      color: $text-secondary;
+      border-bottom: 1px solid $border-color;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 14px 16px;
+    }
+
+    .ant-table-tbody > tr > td {
+      border-bottom: 1px solid rgba(42, 42, 74, 0.5);
+      padding: 14px 16px;
+      background: transparent;
+      color: $text-primary;
+    }
+
+    .ant-table-tbody > tr:hover > td {
+      background: rgba(124, 92, 252, 0.04);
+    }
+
+    .ant-table-tbody > tr:last-child > td {
+      border-bottom: none;
+    }
+
+    .ant-empty {
+      padding: 48px 0;
+    }
+
+    .ant-empty-description {
+      color: $text-secondary;
+    }
+  }
+}
+
+.expense-row {
+  @include fade-slide-in;
+}
+
+.expense-description {
+  font-weight: 500;
+}
+
+.payer-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.amount-value {
+  font-weight: 700;
+  color: $primary-light;
+  font-size: 14px;
+}
+
+.date-value {
+  font-size: 13px;
+  color: $text-secondary;
+}
+
+.split-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+
+  ::ng-deep .ant-tag {
+    border-radius: 6px;
+    font-size: 11px;
+    margin: 0;
+    border: none;
+    font-weight: 500;
+  }
+}
+
+.delete-expense-icon {
+  font-size: 16px;
+  color: $text-secondary;
+  cursor: pointer;
+  @include smooth-transition;
+
+  &:hover {
+    color: $danger;
+  }
+}
+
+.info-alert {
+  margin: 20px;
+}
+
+// ===== Settlement =====
+.settlement-card {
+  ::ng-deep .ant-card-body {
+    padding: 24px !important;
+  }
+}
+
+.settlement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.settlement-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 20px 28px;
+  background: linear-gradient(135deg, rgba(22, 33, 62, 0.8), rgba(26, 26, 46, 0.9));
+  border-radius: 16px;
+  border: 1px solid rgba(124, 92, 252, 0.15);
+  @include smooth-transition;
+  @include fade-slide-in;
+
+  &:hover {
+    border-color: rgba(124, 92, 252, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.settlement-from,
+.settlement-to {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 90px;
+
+  .person-name {
+    font-weight: 600;
+    font-size: 14px;
+  }
+}
+
+.settlement-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+  min-width: 160px;
+
+  .arrow-line {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, $primary, transparent);
+  }
+
+  .arrow-amount {
+    font-size: 20px;
+    font-weight: 800;
+    color: $warning;
+    text-shadow: 0 0 20px rgba(250, 173, 20, 0.3);
+  }
+
+  .arrow-icon {
+    font-size: 20px;
+    color: $primary;
+    animation: pulse 2s ease-in-out infinite;
+  }
+}
+
+// ===== Modal =====
+::ng-deep .expense-modal {
+  .ant-modal-content {
+    background: $bg-card;
+    border: 1px solid $border-color;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .ant-modal-header {
+    background: transparent;
+    border-bottom: 1px solid $border-color;
+    padding: 20px 24px;
+
+    .ant-modal-title {
+      color: $text-primary;
+      font-size: 18px;
+      font-weight: 700;
+    }
+  }
+
+  .ant-modal-body {
+    padding: 24px;
+  }
+
+  .ant-modal-footer {
+    border-top: 1px solid $border-color;
+    padding: 16px 24px;
+
+    .ant-btn {
+      border-radius: 10px;
+      height: 40px;
+      font-weight: 600;
+    }
+
+    .ant-btn-primary {
+      background: linear-gradient(135deg, $primary, $primary-dark);
+      border: none;
+    }
+
+    .ant-btn-default {
+      background: transparent;
+      border: 1px solid $border-color;
+      color: $text-secondary;
+    }
+  }
+
+  .ant-modal-close {
+    color: $text-secondary;
+  }
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: $text-secondary;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      .required {
+        color: $danger;
+      }
+
+      .split-actions {
+        margin-left: auto;
+        font-size: 12px;
+        text-transform: none;
+
+        a {
+          color: $primary;
+          cursor: pointer;
+          font-weight: 500;
+          @include smooth-transition(color);
+
+          &:hover {
+            color: $primary-light;
+          }
+        }
+      }
+    }
+
+    ::ng-deep {
+      .ant-input,
+      .ant-select-selector,
+      .ant-input-number,
+      .ant-picker {
+        background: $surface !important;
+        border: 1px solid $border-color !important;
+        color: $text-primary !important;
+        border-radius: 10px !important;
+
+        &:hover,
+        &:focus {
+          border-color: $primary !important;
+        }
+      }
+
+      .ant-input::placeholder,
+      .ant-select-selection-placeholder,
+      .ant-picker-input > input::placeholder {
+        color: $text-secondary !important;
+      }
+
+      .ant-select-arrow,
+      .ant-picker-suffix {
+        color: $text-secondary;
+      }
+
+      .ant-select-selection-item {
+        color: $text-primary;
+      }
+
+      .ant-input-number-handler-wrap {
+        background: $surface;
+        border-left: 1px solid $border-color;
+      }
+
+      .ant-input-number-handler {
+        border-bottom: 1px solid $border-color;
+        color: $text-secondary;
+      }
+    }
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .flex-1 {
+    flex: 1;
+  }
+}
+
+// ===== Split Members Grid =====
+.split-members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.split-member-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid $border-color;
+  background: $surface;
+  cursor: pointer;
+  @include smooth-transition;
+  font-size: 13px;
+  font-weight: 500;
+
+  &:hover {
+    border-color: rgba(124, 92, 252, 0.4);
+    background: rgba(124, 92, 252, 0.08);
+  }
+
+  &.selected {
+    border-color: $primary;
+    background: rgba(124, 92, 252, 0.12);
+
+    nz-icon {
+      color: $success;
+    }
+  }
+
+  nz-icon {
+    margin-left: auto;
+    font-size: 16px;
+    color: $text-secondary;
+    @include smooth-transition;
+
+    &.checked {
+      color: $success;
+    }
+  }
+}
+
+.split-info-alert {
+  border-radius: 12px;
+
+  ::ng-deep {
+    .ant-alert {
+      border-radius: 12px;
+      background: rgba(24, 144, 255, 0.08);
+      border: 1px solid rgba(24, 144, 255, 0.2);
+    }
+
+    .ant-alert-message {
+      color: $info;
+      font-weight: 600;
+    }
+  }
+}
+
+// ===== Responsive =====
+@media (max-width: 1024px) {
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .expense-body {
+    grid-template-columns: 1fr;
+  }
+
+  .members-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .expense-wrapper {
+    padding: 16px;
+  }
+
+  .expense-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+
+    h1 {
+      font-size: 22px;
+    }
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .settlement-item {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .settlement-arrow {
+    flex-direction: row;
+    min-width: auto;
+
+    .arrow-line {
+      width: 40px;
+      height: 2px;
+    }
+  }
+}
